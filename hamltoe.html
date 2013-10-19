@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="hamltoe.css" />
+
+        <script type="text/javascript" src="haml.js"></script>
+        <script type="text/javascript" src="HAMLToe.js"></script>
+    </head>
+    <body>
+        <div class="hamltoe-panel">
+            <div id="hamltoe-toolbar"/>
+<textarea id="hamltoe-input" class="hamltoe-input">
+%h1 hello world!</textarea>
+            <div id="hamltoe-preview" class="hamltoe-preview"></div>
+        </div>
+
+        <script type="text/javascript">
+            (function () {
+                var converter = new HAMLToe.Converter();
+                var editor = new HAMLToe.Editor(converter);
+
+                editor.run();
+            })();
+        </script>
+    </body>
+</html>
