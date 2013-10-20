@@ -1,8 +1,13 @@
 A javascript-based utility to allow editing of HAML with a live preview in
-HTML. Based on concepts from PageDown https://code.google.com/p/pagedown/
-and using the HAML to HTML script (haml.js) from
+HTML. Liberally stolen from PageDown https://code.google.com/p/pagedown/
+    (c) 2004-2005 John Gruber (http://daringfireball.net/projects/markdown/)
+    (c) 2007 John Fraser
+    (c) 2009 Dana Robinson
+    (c) 2009-2013 Stack Exchange Inc.
+
+and using the HAML to HTML script (haml.js, with modifications) from
 http://haml-html-coffeecup-javascript-coffeescript-converter.smullindesign.com/
-    (c) 2011-12, Ronald Holshausen (https://github.com/uglyog)
+    (c) 2011-2012, Ronald Holshausen (https://github.com/uglyog)
 
 The MIT License (MIT)
 
