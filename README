@@ -1,7 +1,7 @@
 HAMLToe
 =======
 
-HAMLToe isa simple haml to html translator that allows for editing with an on the fly preview of the resulting html.
+HAMLToe is a simple haml to html translator that allows for editing with an on the fly preview of the resulting html.
 
 Based heavily on parts of PageDown (https://code.google.com/p/pagedown/) and uses the haml.js script from
 http://haml-html-coffeecup-javascript-coffeescript-converter.smullindesign.com/ (https://github.com/uglyog) with some
