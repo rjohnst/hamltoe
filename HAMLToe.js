@@ -1,9 +1,17 @@
 var HAMLToe = {};
 
 (function () {
+    if(!String.prototype.trim){
+        String.prototype.trim = function(){
+            return this.replace(/^\s+|\s+$/g,'');
+        };
+    }
+
     HAMLToe.Converter = function () {
         this.makeHtml = function (text) {
-            return haml.compileHaml(text);
+            return haml.compileHaml({
+                source: text.trim()
+            });
         }
     }
 
@@ -48,6 +56,68 @@ var HAMLToe = {};
         // TODO this.buttonBar = doc.getElementById("wmd-button-bar");
         this.preview = doc.getElementById("hamltoe-preview");
         this.input = doc.getElementById("hamltoe-input");
+    };
+
+
+    // UNFINISHED
+    // The assignment in the while loop makes jslint cranky.
+    // I'll change it to a better loop later.
+    position.getTop = function (elem, isInner) {
+        var result = elem.offsetTop;
+        if (!isInner) {
+            while (elem = elem.offsetParent) {
+                result += elem.offsetTop;
+            }
+        }
+        return result;
+    };
+
+    position.getHeight = function (elem) {
+        return elem.offsetHeight || elem.scrollHeight;
+    };
+
+    position.getWidth = function (elem) {
+        return elem.offsetWidth || elem.scrollWidth;
+    };
+
+    position.getPageSize = function () {
+
+        var scrollWidth, scrollHeight;
+        var innerWidth, innerHeight;
+
+        // It's not very clear which blocks work with which browsers.
+        if (self.innerHeight && self.scrollMaxY) {
+            scrollWidth = doc.body.scrollWidth;
+            scrollHeight = self.innerHeight + self.scrollMaxY;
+        }
+        else if (doc.body.scrollHeight > doc.body.offsetHeight) {
+            scrollWidth = doc.body.scrollWidth;
+            scrollHeight = doc.body.scrollHeight;
+        }
+        else {
+            scrollWidth = doc.body.offsetWidth;
+            scrollHeight = doc.body.offsetHeight;
+        }
+
+        if (self.innerHeight) {
+            // Non-IE browser
+            innerWidth = self.innerWidth;
+            innerHeight = self.innerHeight;
+        }
+        else if (doc.documentElement && doc.documentElement.clientHeight) {
+            // Some versions of IE (IE 6 w/ a DOCTYPE declaration)
+            innerWidth = doc.documentElement.clientWidth;
+            innerHeight = doc.documentElement.clientHeight;
+        }
+        else if (doc.body) {
+            // Other versions of IE
+            innerWidth = doc.body.clientWidth;
+            innerHeight = doc.body.clientHeight;
+        }
+
+        var maxWidth = Math.max(scrollWidth, innerWidth);
+        var maxHeight = Math.max(scrollHeight, innerHeight);
+        return [maxWidth, maxHeight, innerWidth, innerHeight];
     };
 
     function PreviewManager(converter, panels) {

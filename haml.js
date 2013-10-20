@@ -837,8 +837,10 @@
 
 
         JsCodeGenerator.prototype.closeAndReturnOutput = function() {
-            this.outputBuffer.flush();
-            return this.outputBuffer.output() + '  }\n  return html.join("");\n';
+            // MOD - just the raw html please
+            //this.outputBuffer.flush();
+            //return this.outputBuffer.output() + '  }\n  return html.join("");\n';
+            return this.outputBuffer.buffer;
         };
 
         /*
@@ -1455,12 +1457,13 @@
                 } else {
                     throw "No template source specified for compileHaml. You need to provide a source, sourceId or sourceUrl option";
                 }
-                result = this._compileHamlToJs(tokinser, codeGenerator);
-                if (options.outputFormat !== 'string') {
+                // MOD - just the raw html thanks
+                return this._compileHamlToJs(tokinser, codeGenerator);
+                /*if (options.outputFormat !== 'string') {
                     return codeGenerator.generateJsFunction(result);
                 } else {
                     return "function (context) {\n" + result + "}\n";
-                }
+                }*/
             }
         },
         /*
