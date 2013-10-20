@@ -7,14 +7,12 @@
         <script type="text/javascript" src="underscore.string.js"></script>
         <script type="text/javascript" src="haml.js"></script>
         <script type="text/javascript" src="HAMLToe.js"></script>
-        <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
     </head>
     <body>
         <div class="hamltoe-panel">
             <div id="hamltoe-toolbar"/>
 <textarea id="hamltoe-input" class="hamltoe-input">
 %h1 hello world!</textarea>
-            <div><button id="hamltoe-doit" value="Do it" /></div>
             <div id="hamltoe-preview" class="hamltoe-preview"></div>
         </div>
 
@@ -26,13 +24,6 @@
 
                 editor.run();
             })();
-
-            jQuery(function($){
-                $("#hamltoe-doit").click(function() {
-                    editor.refreshPreview();
-                });
-
-            });
         </script>
     </body>
 </html>
