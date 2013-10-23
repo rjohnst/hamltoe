@@ -14,7 +14,7 @@ blockquote {
     overflow: hidden;
 }
 
-.wmd-button-bar {
+.hamltoe-button-bar {
     width: 100%;
     background-color: Silver;
 }
@@ -37,7 +37,7 @@ blockquote {
     background-color: #c0e0ff;
 }
 
-.wmd-button-row {
+.hamltoe-button-row {
     position: relative;
     margin-left: 5px;
     margin-right: 5px;
@@ -47,7 +47,7 @@ blockquote {
     height: 20px;
 }
 
-.wmd-spacer {
+.hamltoe-spacer {
     width: 1px;
     height: 20px;
     margin-left: 14px;
@@ -58,7 +58,7 @@ blockquote {
     list-style: none;
 }
 
-.wmd-button {
+.hamltoe-button {
     width: 20px;
     height: 20px;
     padding-left: 2px;
@@ -69,8 +69,8 @@ blockquote {
     cursor: pointer;
 }
 
-.wmd-button > span {
-    background-image: url(../../wmd-buttons.png);
+.hamltoe-button > span {
+    background-image: url(hamltoe-buttons.png);
     background-repeat: no-repeat;
     background-position: 0px 0px;
     width: 20px;
@@ -78,40 +78,36 @@ blockquote {
     display: inline-block;
 }
 
-.wmd-spacer1 {
+.hamltoe-spacer1 {
     left: 50px;
 }
-.wmd-spacer2 {
+.hamltoe-spacer2 {
     left: 175px;
 }
-.wmd-spacer3 {
+.hamltoe-spacer3 {
     left: 300px;
 }
 
-
-
-
-.wmd-prompt-background {
+.hamltoe-prompt-background {
     background-color: Black;
 }
 
-.wmd-prompt-dialog {
+.hamltoe-prompt-dialog {
     border: 1px solid #999999;
     background-color: #F5F5F5;
 }
 
-.wmd-prompt-dialog > div {
+.hamltoe-prompt-dialog > div {
     font-size: 0.8em;
     font-family: arial, helvetica, sans-serif;
 }
 
-
-.wmd-prompt-dialog > form > input[type="text"] {
+.hamltoe-prompt-dialog > form > input[type="text"] {
     border: 1px solid #999999;
     color: black;
 }
 
-.wmd-prompt-dialog > form > input[type="button"]{
+.hamltoe-prompt-dialog > form > input[type="button"]{
     border: 1px solid #888888;
     font-family: trebuchet MS, helvetica, sans-serif;
     font-size: 0.8em;
