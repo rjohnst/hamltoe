@@ -1,56 +1,6 @@
-var HAMLToe = {};
+// needs HAMLToe.Converter.js at the moment
 
 (function () {
-    if(!String.prototype.trim){
-        String.prototype.trim = function(){
-            return this.replace(/^\s+|\s+$/g,'');
-        };
-    }
-
-    function identity(x) { return x; }
-    function returnFalse(x) { return false; }
-
-    function HookCollection() { }
-
-    HookCollection.prototype = {
-
-        chain: function (hookname, func) {
-            var original = this[hookname];
-            if (!original)
-                throw new Error("unknown hook " + hookname);
-
-            if (original === identity)
-                this[hookname] = func;
-            else
-                this[hookname] = function (text) {
-                    var args = Array.prototype.slice.call(arguments, 0);
-                    args[0] = original.apply(null, args);
-                    return func.apply(null, args);
-                };
-        },
-        set: function (hookname, func) {
-            if (!this[hookname])
-                throw new Error("unknown hook " + hookname);
-            this[hookname] = func;
-        },
-        addNoop: function (hookname) {
-            this[hookname] = identity;
-        },
-        addFalse: function (hookname) {
-            this[hookname] = returnFalse;
-        }
-    };
-
-    HAMLToe.HookCollection = HookCollection;
-
-
-    HAMLToe.Converter = function () {
-        this.makeHtml = function (text) {
-            return haml.compileHaml({
-                source: text.trim()
-            });
-        }
-    }
 
     var util = {},
             position = {},
@@ -136,7 +86,7 @@ var HAMLToe = {};
             panels = new PanelCollection();
 
             var commandManager = new CommandManager(hooks, getString);
-            var previewManager = new PreviewManager(hamltoeConverter, panels);
+            var previewManager = new PreviewManager(hamltoeConverter, panels, function () { hooks.onPreviewRefresh(); });
             var undoManager, uiManager;
 
             if (!/\?noundo/.test(doc.location.href)) {
@@ -158,9 +108,157 @@ var HAMLToe = {};
             var forceRefresh = that.refreshPreview = function () { previewManager.refresh(true); };
 
             forceRefresh();
-        }
+        };
     }
 
+    // before: contains all the text in the input box BEFORE the selection.
+    // after: contains all the text in the input box AFTER the selection.
+    function Chunks() { }
+
+    // startRegex: a regular expression to find the start tag
+    // endRegex: a regular expresssion to find the end tag
+    Chunks.prototype.findTags = function (startRegex, endRegex) {
+
+        var chunkObj = this;
+        var regex;
+
+        if (startRegex) {
+
+            regex = util.extendRegExp(startRegex, "", "$");
+
+            this.before = this.before.replace(regex,
+                    function (match) {
+                        chunkObj.startTag = chunkObj.startTag + match;
+                        return "";
+                    });
+
+            regex = util.extendRegExp(startRegex, "^", "");
+
+            this.selection = this.selection.replace(regex,
+                    function (match) {
+                        chunkObj.startTag = chunkObj.startTag + match;
+                        return "";
+                    });
+        }
+
+        if (endRegex) {
+
+            regex = util.extendRegExp(endRegex, "", "$");
+
+            this.selection = this.selection.replace(regex,
+                    function (match) {
+                        chunkObj.endTag = match + chunkObj.endTag;
+                        return "";
+                    });
+
+            regex = util.extendRegExp(endRegex, "^", "");
+
+            this.after = this.after.replace(regex,
+                    function (match) {
+                        chunkObj.endTag = match + chunkObj.endTag;
+                        return "";
+                    });
+        }
+    };
+
+    // If remove is false, the whitespace is transferred
+    // to the before/after regions.
+    //
+    // If remove is true, the whitespace disappears.
+    Chunks.prototype.trimWhitespace = function (remove) {
+        var beforeReplacer, afterReplacer, that = this;
+        if (remove) {
+            beforeReplacer = afterReplacer = "";
+        } else {
+            beforeReplacer = function (s) { that.before += s; return ""; }
+            afterReplacer = function (s) { that.after = s + that.after; return ""; }
+        }
+
+        this.selection = this.selection.replace(/^(\s*)/, beforeReplacer).replace(/(\s*)$/, afterReplacer);
+    };
+
+
+    Chunks.prototype.skipLines = function (nLinesBefore, nLinesAfter, findExtraNewlines) {
+
+        if (nLinesBefore === undefined) {
+            nLinesBefore = 1;
+        }
+
+        if (nLinesAfter === undefined) {
+            nLinesAfter = 1;
+        }
+
+        nLinesBefore++;
+        nLinesAfter++;
+
+        var regexText;
+        var replacementText;
+
+        // chrome bug ... documented at: http://meta.stackoverflow.com/questions/63307/blockquote-glitch-in-editor-in-chrome-6-and-7/65985#65985
+        if (navigator.userAgent.match(/Chrome/)) {
+            "X".match(/()./);
+        }
+
+        this.selection = this.selection.replace(/(^\n*)/, "");
+
+        this.startTag = this.startTag + re.$1;
+
+        this.selection = this.selection.replace(/(\n*$)/, "");
+        this.endTag = this.endTag + re.$1;
+        this.startTag = this.startTag.replace(/(^\n*)/, "");
+        this.before = this.before + re.$1;
+        this.endTag = this.endTag.replace(/(\n*$)/, "");
+        this.after = this.after + re.$1;
+
+        if (this.before) {
+
+            regexText = replacementText = "";
+
+            while (nLinesBefore--) {
+                regexText += "\\n?";
+                replacementText += "\n";
+            }
+
+            if (findExtraNewlines) {
+                regexText = "\\n*";
+            }
+            this.before = this.before.replace(new re(regexText + "$", ""), replacementText);
+        }
+
+        if (this.after) {
+
+            regexText = replacementText = "";
+
+            while (nLinesAfter--) {
+                regexText += "\\n?";
+                replacementText += "\n";
+            }
+            if (findExtraNewlines) {
+                regexText = "\\n*";
+            }
+
+            this.after = this.after.replace(new re(regexText, ""), replacementText);
+        }
+    };
+
+    // end of Chunks
+
+    // A collection of the important regions on the page.
+    // Cached so we don't have to keep traversing the DOM.
+    // Also holds ieCachedRange and ieCachedScrollTop, where necessary; working around
+    // this issue:
+    // Internet explorer has problems with CSS sprite buttons that use HTML
+    // lists.  When you click on the background image "button", IE will
+    // select the non-existent link text and discard the selection in the
+    // textarea.  The solution to this is to cache the textarea selection
+    // on the button's mousedown event and set a flag.  In the part of the
+    // code where we need to grab the selection, we check for the flag
+    // and, if it's set, use the cached area instead of querying the
+    // textarea.
+    //
+    // This ONLY affects Internet Explorer (tested on versions 6, 7
+    // and 8) and ONLY on button clicks.  Keyboard shortcuts work
+    // normally since the focus never leaves the textarea.
     function PanelCollection() {
         this.buttonBar = doc.getElementById("hamltoe-toolbar");
         this.preview = doc.getElementById("hamltoe-preview");
@@ -207,6 +305,46 @@ var HAMLToe = {};
             elem.removeEventListener(event, listener, false);
         }
     };
+
+    // Converts \r\n and \r to \n.
+    util.fixEolChars = function (text) {
+        text = text.replace(/\r\n/g, "\n");
+        text = text.replace(/\r/g, "\n");
+        return text;
+    };
+
+    // Extends a regular expression.  Returns a new RegExp
+    // using pre + regex + post as the expression.
+    // Used in a few functions where we have a base
+    // expression and we want to pre- or append some
+    // conditions to it (e.g. adding "$" to the end).
+    // The flags are unchanged.
+    //
+    // regex is a RegExp, pre and post are strings.
+    util.extendRegExp = function (regex, pre, post) {
+
+        if (pre === null || pre === undefined) {
+            pre = "";
+        }
+        if (post === null || post === undefined) {
+            post = "";
+        }
+
+        var pattern = regex.toString();
+        var flags;
+
+        // Replace the flags with empty space and store them.
+        pattern = pattern.replace(/\/([gim]*)$/, function (wholeMatch, flagsPart) {
+            flags = flagsPart;
+            return "";
+        });
+
+        // Remove the slash delimiters on the regular expression.
+        pattern = pattern.replace(/(^\/|\/$)/g, "");
+        pattern = pre + pattern + post;
+
+        return new re(pattern, flags);
+    }
 
     // UNFINISHED
     // The assignment in the while loop makes jslint cranky.
@@ -644,7 +782,7 @@ var HAMLToe = {};
         this.init();
     };
 
-    function PreviewManager(converter, panels) {
+    function PreviewManager(converter, panels, previewRefreshCallback) {
 
         var managerObj = this;
         var timeout;
@@ -804,6 +942,7 @@ var HAMLToe = {};
 
             if (panels.preview) {
                 previewSet(text);
+                previewRefreshCallback();
             }
 
             setPanelScrollTops();
