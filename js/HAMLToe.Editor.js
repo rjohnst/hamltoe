@@ -2109,60 +2109,31 @@
         chunk.selection = chunk.selection.replace(/(^\s+|\s+$)/g, "");
 
         // If we clicked the button with no selected text, we just
-        // make a level 2 hash header around some default text.
+        // make a level 1 header around some default text.
         if (!chunk.selection) {
-            chunk.startTag = "## ";
+            chunk.startTag = "%h1 ";
             chunk.selection = this.getString("headingexample");
-            chunk.endTag = " ##";
             return;
         }
 
-        var headerLevel = 0;     // The existing header level of the selected text.
-
         // Remove any existing hash heading markdown and save the header level.
-        chunk.findTags(/#+[ ]*/, /[ ]*#+/);
-        if (/#+/.test(chunk.startTag)) {
-            headerLevel = re.lastMatch.length;
-        }
+        chunk.findTags(/%h[1-3][ ]*/);
+
+        // Get the existing header level of the selected text, which could be 0
+        var headerLevel = chunk.startTag ? parseInt(chunk.startTag.substr(2,1)) : 0;
+
         chunk.startTag = chunk.endTag = "";
 
-        // Try to get the current header level by looking for - and = in the line
-        // below the selection.
-        chunk.findTags(null, /\s?(-+|=+)/);
-        if (/=+/.test(chunk.endTag)) {
-            headerLevel = 1;
-        }
-        if (/-+/.test(chunk.endTag)) {
-            headerLevel = 2;
-        }
-
-        // Skip to the next line so we can create the header markdown.
-        chunk.startTag = chunk.endTag = "";
-        chunk.skipLines(1, 1);
-
-        // We make a level 2 header if there is no current header.
-        // If there is a header level, we substract one from the header level.
-        // If it's already a level 1 header, it's removed.
-        var headerLevelToCreate = headerLevel == 0 ? 2 : headerLevel - 1;
+        // add one to the header level, unless it's 3, in which case set it to 0 to remove the header
+        var headerLevelToCreate = headerLevel == 3 ? 0 : headerLevel + 1;
 
         if (headerLevelToCreate > 0) {
-
-            // The button only creates level 1 and 2 underline headers.
-            // Why not have it iterate over hash header levels?  Wouldn't that be easier and cleaner?
-            var headerChar = headerLevelToCreate >= 2 ? "-" : "=";
-            var len = chunk.selection.length;
-            if (len > SETTINGS.lineLength) {
-                len = SETTINGS.lineLength;
-            }
-            chunk.endTag = "\n";
-            while (len--) {
-                chunk.endTag += headerChar;
-            }
+            chunk.startTag = "%h" + headerLevelToCreate + " ";
         }
     };
 
     commandProto.doHorizontalRule = function (chunk, postProcessing) {
-        chunk.startTag = "----------\n";
+        chunk.startTag = "%hr";
         chunk.selection = "";
         chunk.skipLines(2, 1, true);
     }
