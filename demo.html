@@ -13,7 +13,8 @@
         <div class="hamltoe-panel">
             <!--<div id="hamltoe-toolbar"></div>-->
             <div class="hamltoe-controls">
-                <a id="hamltoe-export">export</a>
+                <a id="hamltoe-import">open</a>
+                <a id="hamltoe-export">save</a>
             </div>
             <div class="hamltoe-editor">
 <textarea id="hamltoe-input" class="hamltoe-input">
@@ -32,11 +33,11 @@
                 editor.run();
             })();
 
-            var line = "%0A";
             var exporter = document.getElementById("hamltoe-export");
+            // TODO pull this out to be it's own class a la HAMLTOE.Converter
             exporter.onclick = function() {
                 this.herf = "";
-                //test for a file name to use, let the user know if there's not one set and return
+                // TODO test for a file name to use, let the user know if there's not one set and return
                 this.href = "data:application/octet-stream,".concat(encodeHaml());
                 this.download = "wakka.txt";
             };
@@ -44,6 +45,9 @@
             function encodeHaml() {
                 return encodeURI(document.getElementById("hamltoe-input").value);
             };
+
+            var importer = document.getElementById("hamltoe-import");
+
         </script>
     </body>
 </html>
