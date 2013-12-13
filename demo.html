@@ -11,7 +11,10 @@
     </head>
     <body>
         <div class="hamltoe-panel">
-            <div id="hamltoe-toolbar"></div>
+            <!--<div id="hamltoe-toolbar"></div>-->
+            <div class="hamltoe-controls">
+                <a id="hamltoe-export">export</a>
+            </div>
             <div class="hamltoe-editor">
 <textarea id="hamltoe-input" class="hamltoe-input">
 %h1 hello world!
@@ -28,6 +31,19 @@
 
                 editor.run();
             })();
+
+            var line = "%0A";
+            var exporter = document.getElementById("hamltoe-export");
+            exporter.onclick = function() {
+                this.herf = "";
+                //test for a file name to use, let the user know if there's not one set and return
+                this.href = "data:application/octet-stream,".concat(encodeHaml());
+                this.download = "wakka.txt";
+            };
+
+            function encodeHaml() {
+                return encodeURI(document.getElementById("hamltoe-input").value);
+            };
         </script>
     </body>
 </html>
