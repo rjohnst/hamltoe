@@ -87,23 +87,25 @@
 
             var commandManager = new CommandManager(hooks, getString);
             var previewManager = new PreviewManager(hamltoeConverter, panels, function () { hooks.onPreviewRefresh(); });
-            var undoManager, uiManager;
 
-            if (!/\?noundo/.test(doc.location.href)) {
-                undoManager = new UndoManager(function () {
-                    previewManager.refresh();
-                    if (uiManager) // not available on the first call
-                        uiManager.setUndoRedoButtonStates();
-                }, panels);
-                this.textOperation = function (f) {
-                    undoManager.setCommandMode();
-                    f();
-                    that.refreshPreview();
-                }
-            }
-
-            uiManager = new UIManager(panels, undoManager, previewManager, commandManager, options.helpButton, getString);
-            uiManager.setUndoRedoButtonStates();
+            // TODO disable the toolbar and undoness for now
+//            var undoManager, uiManager;
+//
+//            if (!/\?noundo/.test(doc.location.href)) {
+//                undoManager = new UndoManager(function () {
+//                    previewManager.refresh();
+//                    if (uiManager) // not available on the first call
+//                        uiManager.setUndoRedoButtonStates();
+//                }, panels);
+//                this.textOperation = function (f) {
+//                    undoManager.setCommandMode();
+//                    f();
+//                    that.refreshPreview();
+//                }
+//            }
+//
+//            uiManager = new UIManager(panels, undoManager, previewManager, commandManager, options.helpButton, getString);
+//            uiManager.setUndoRedoButtonStates();
 
             var forceRefresh = that.refreshPreview = function () { previewManager.refresh(true); };
 
@@ -1533,6 +1535,7 @@
 
         // Look for stars before and after.  Is the chunk already marked up?
         // note that these regex matches cannot fail
+        // Look for %strong
         var starsBefore = /(\**$)/.exec(chunk.before)[0];
         var starsAfter = /(^\**)/.exec(chunk.after)[0];
 
@@ -1934,6 +1937,7 @@
         }
     };
 
+    // TODO remove this
     commandProto.doCode = function (chunk, postProcessing) {
 
         var hasTextBefore = /\S[ ]*$/.test(chunk.before);
