@@ -8,6 +8,7 @@
         <script type="text/javascript" src="js/haml.js"></script>
         <script type="text/javascript" src="js/HAMLToe.Converter.js"></script>
         <script type="text/javascript" src="js/HAMLToe.Editor.js"></script>
+        <script type="text/javascript" src="js/HAMLToe.Exporter.js"></script>
     </head>
     <body>
         <div class="hamltoe-panel">
@@ -31,20 +32,10 @@
                 editor = new HAMLToe.Editor(converter);
 
                 editor.run();
+
+                HAMLToe.Exporter();
             })();
 
-            var exporter = document.getElementById("hamltoe-export");
-            // TODO pull this out to be it's own class a la HAMLTOE.Converter
-            exporter.onclick = function() {
-                this.herf = "";
-                // TODO test for a file name to use, let the user know if there's not one set and return
-                this.href = "data:application/octet-stream,".concat(encodeHaml());
-                this.download = "wakka.txt";
-            };
-
-            function encodeHaml() {
-                return encodeURI(document.getElementById("hamltoe-input").value);
-            };
 
             var importer = document.getElementById("hamltoe-import");
 
