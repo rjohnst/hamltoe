@@ -10,8 +10,10 @@
             this.download = "wakka.txt";
         };
 
-        function encodeHaml() {
-            return encodeURI(document.getElementById("hamltoe-input").value);
-        };
     };
+
+    function encodeHaml() {
+        return encodeURI(document.getElementById("hamltoe-input").value);
+    };
+
 })();
