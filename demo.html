@@ -9,12 +9,14 @@
         <script type="text/javascript" src="js/HAMLToe.Converter.js"></script>
         <script type="text/javascript" src="js/HAMLToe.Editor.js"></script>
         <script type="text/javascript" src="js/HAMLToe.Exporter.js"></script>
+        <script type="text/javascript" src="js/HAMLToe.Importer.js"></script>
     </head>
     <body>
         <div class="hamltoe-panel">
             <!--<div id="hamltoe-toolbar"></div>-->
             <div class="hamltoe-controls">
-                <a id="hamltoe-import">open</a>
+                <div id="hamltoe-dropzone">drop haml file here</div>
+                <output id="hamltoe-file"></output>
                 <a id="hamltoe-export">save</a>
             </div>
             <div class="hamltoe-editor">
@@ -34,11 +36,8 @@
                 editor.run();
 
                 HAMLToe.Exporter();
+                HAMLToe.Importer();
             })();
-
-
-            var importer = document.getElementById("hamltoe-import");
-
         </script>
     </body>
 </html>
