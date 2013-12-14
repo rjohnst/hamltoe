@@ -10,7 +10,7 @@
         evt.stopPropagation();
         evt.preventDefault();
 
-        var file = evt.dataTransfer.files[0]; // FileList object.
+        var file = evt.dataTransfer.files[0]; // should only ever be one file hopefully
         // TODO validate the file is haml
 
         var reader = new FileReader();
