@@ -33,10 +33,10 @@
                 var converter = new HAMLToe.Converter();
                 editor = new HAMLToe.Editor(converter);
 
-                editor.run();
-
                 HAMLToe.Exporter();
-                HAMLToe.Importer();
+                HAMLToe.Importer(editor);
+
+                editor.run();
             })();
         </script>
     </body>

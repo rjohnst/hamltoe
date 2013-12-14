@@ -1,9 +1,13 @@
 (function () {
 
-    HAMLToe.Importer = function() {
+    // FIXME yay global variables!
+    var editor;
+
+    HAMLToe.Importer = function(hamltoeEditor) {
         var dropZone = document.getElementById('hamltoe-dropzone');
         dropZone.addEventListener('dragover', handleDragOver, false);
         dropZone.addEventListener('drop', handleFileSelect, false);
+        editor = hamltoeEditor;
     };
 
     function handleFileSelect(evt) {
@@ -20,6 +24,7 @@
             return function(e) {
                 document.getElementById('hamltoe-file').innerText = "editing ".concat(escape(theFile.name));
                 document.getElementById('hamltoe-input').innerText = e.target.result;
+                editor.refreshPreview();
             };
         })(file);
 
