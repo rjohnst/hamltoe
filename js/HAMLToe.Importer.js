@@ -10,11 +10,21 @@
         evt.stopPropagation();
         evt.preventDefault();
 
-        var files = evt.dataTransfer.files; // FileList object.
+        var file = evt.dataTransfer.files[0]; // FileList object.
         // TODO validate the file is haml
-        // TODO can we just get one file from the drop?
 
-        document.getElementById('hamltoe-file').innerText = "editing ".concat(escape(files[0].name));
+        var reader = new FileReader();
+
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+            return function(e) {
+                document.getElementById('hamltoe-file').innerText = "editing ".concat(escape(theFile.name));
+                document.getElementById('hamltoe-input').innerText = e.target.result;
+            };
+        })(file);
+
+        // Read in the image file as a data URL.
+        reader.readAsText(file);
     }
 
     function handleDragOver(evt) {
