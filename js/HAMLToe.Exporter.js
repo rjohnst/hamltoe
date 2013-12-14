@@ -7,7 +7,7 @@
             this.herf = "";
             // TODO test for a file name to use, let the user know if there's not one set and return
             this.href = "data:application/octet-stream,".concat(encodeHaml());
-            this.download = "wakka.txt";
+            this.download = document.getElementById('hamltoe-file').innerText;
         };
 
     };

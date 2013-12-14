@@ -22,7 +22,7 @@
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
             return function(e) {
-                document.getElementById('hamltoe-file').innerText = "editing ".concat(escape(theFile.name));
+                document.getElementById('hamltoe-file').innerText = theFile.name;
                 document.getElementById('hamltoe-input').innerText = e.target.result;
                 editor.refreshPreview();
             };
