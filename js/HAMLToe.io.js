@@ -1,5 +1,16 @@
 (function () {
 
+    var editor;
+
+    HAMLToe.io = function(hamltoeEditor) {
+        editor = hamltoeEditor;
+
+        this.run = function() {
+            new HAMLToe.Importer();
+            new HAMLToe.Exporter();
+        };
+    };
+
     HAMLToe.Exporter = function() {
         var exporter = document.getElementById("hamltoe-export");
 
@@ -16,14 +27,10 @@
         return encodeURI(document.getElementById("hamltoe-input").value);
     };
 
-    // FIXME yay global variables!
-    var editor;
-
-    HAMLToe.Importer = function(hamltoeEditor) {
+    HAMLToe.Importer = function() {
         var dropZone = document.getElementById('hamltoe-dropzone');
         dropZone.addEventListener('dragover', handleDragOver, false);
         dropZone.addEventListener('drop', handleFileSelect, false);
-        editor = hamltoeEditor;
     };
 
     function handleFileSelect(evt) {

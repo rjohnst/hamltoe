@@ -39,11 +39,10 @@
             (function () {
                 var converter = new HAMLToe.Converter();
                 editor = new HAMLToe.Editor(converter);
-
-                HAMLToe.Exporter();
-                HAMLToe.Importer(editor);
-
                 editor.run();
+
+                var io = new HAMLToe.io(editor);
+                io.run();
             })();
         </script>
     </body>
