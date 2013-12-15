@@ -1,0 +1,5 @@
+* apply css to haml ouput
+* support for concordion commands
+* help link
+* default content on open should be help text
+* tips widget
