@@ -1,10 +1,18 @@
+// TODO refacter so all these methods are not exposed!
 (function () {
+    // FIXME yay global variables!
+    var editor;
 
     var editor;
 
     HAMLToe.io = function(hamltoeEditor) {
         editor = hamltoeEditor;
 
+    document.getElementById("hamltoe-new").onclick = function() {
+        document.getElementById("hamltoe-input").value = "";
+        document.getElementById('hamltoe-file').innerText = "";
+        editor.refreshPreview();
+    }
         this.run = function() {
             new HAMLToe.Importer();
             new HAMLToe.Exporter();
@@ -12,8 +20,8 @@
     };
 
     HAMLToe.Exporter = function() {
-        var exporter = document.getElementById("hamltoe-export");
 
+        var exporter = document.getElementById("hamltoe-export");
         exporter.onclick = function() {
             this.herf = "";
             // TODO test for a file name to use, let the user know if there's not one set and return
@@ -25,6 +33,7 @@
 
     function encodeHaml() {
         return encodeURI(document.getElementById("hamltoe-input").value);
+
     };
 
     HAMLToe.Importer = function() {
