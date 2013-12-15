@@ -1,5 +1,21 @@
 (function () {
 
+    HAMLToe.Exporter = function() {
+        var exporter = document.getElementById("hamltoe-export");
+
+        exporter.onclick = function() {
+            this.herf = "";
+            // TODO test for a file name to use, let the user know if there's not one set and return
+            this.href = "data:application/octet-stream,".concat(encodeHaml());
+            this.download = document.getElementById('hamltoe-file').innerText;
+        };
+
+    };
+
+    function encodeHaml() {
+        return encodeURI(document.getElementById("hamltoe-input").value);
+    };
+
     // FIXME yay global variables!
     var editor;
 
@@ -37,4 +53,5 @@
         evt.preventDefault();
         evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     }
+
 })();
