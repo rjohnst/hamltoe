@@ -8,14 +8,15 @@
     HAMLToe.io = function(hamltoeEditor) {
         editor = hamltoeEditor;
 
-    document.getElementById("hamltoe-new").onclick = function() {
-        document.getElementById("hamltoe-input").value = "";
-        document.getElementById('hamltoe-file').innerText = "";
-        editor.refreshPreview();
-    }
         this.run = function() {
             new HAMLToe.Importer();
             new HAMLToe.Exporter();
+
+            document.getElementById("hamltoe-new").onclick = function() {
+                document.getElementById("hamltoe-input").innerText = "";
+                document.getElementById('hamltoe-file').innerText = "";
+                editor.refreshPreview();
+            }
         };
     };
 
@@ -54,8 +55,8 @@
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
             return function(e) {
-                document.getElementById('hamltoe-file').innerText = theFile.name;
                 document.getElementById('hamltoe-input').innerText = e.target.result;
+                document.getElementById('hamltoe-file').innerText = theFile.name;
                 editor.refreshPreview();
             };
         })(file);
