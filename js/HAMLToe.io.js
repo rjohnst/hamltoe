@@ -3,8 +3,6 @@
     // FIXME yay global variables!
     var editor;
 
-    var editor;
-
     HAMLToe.io = function(hamltoeEditor) {
         editor = hamltoeEditor;
 
