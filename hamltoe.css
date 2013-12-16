@@ -117,3 +117,18 @@ blockquote {
 /*
   styles for HAMLToe.io
 */
+.hamltoe-dropzone {
+    color: #bbb;
+    font: 20pt bold "Trebuchet MS", Helvetica, sans-serif;
+    text-align: center;
+    margin: 10px;
+    padding: 10px;
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.hamltoe-editing {
+    font: 12pt normal;
+}
