@@ -20,14 +20,13 @@
 
     HAMLToe.Exporter = function() {
 
-        var exporter = $( "#hamltoe-export" );
-        exporter.onclick = function() {
+        $( "#hamltoe-export" ).click( function() {
             this.herf = "";
             // TODO test for a file name to use, let the user know if there's not one set and return
             this.href = "data:application/octet-stream,".concat(encodeHaml());
             var name = $( "#hamltoe-file").text();
             this.download = name == "" ? "new.haml" : name;
-        };
+        });
 
     };
 

@@ -1,0 +1,324 @@
+* {
+    font-family: Arial;
+    color: #202020;
+}
+
+body {
+    padding: 20px 32px;
+}
+
+pre {
+    padding: 6px 28px 6px 28px;
+    background-color: #E8EEF7;
+}
+
+pre,pre *,code,code *,kbd {
+    font-family: Courier New, Courier;
+    font-size: 10pt;
+}
+
+.feature,.feature * {
+    font-size: 24pt;
+    font-weight: normal;
+    color: #005796;
+    margin: 0.5em 0;
+}
+
+p,td,th,li,.breadcrumbs {
+    font-size: 10pt;
+}
+
+p,li {
+    line-height: 140%;
+}
+
+table {
+    border-collapse: collapse;
+    empty-cells: show;
+    margin: 8px 0px 8px 0px;
+}
+
+th,td {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+td {
+    background-color: white;
+    vertical-align: top;
+}
+
+th {
+    background-color: #C3D9FF;
+}
+
+li {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+img {
+    vertical-align: bottom;
+}
+
+.criteria {
+    padding: 12px 12px 12px 12px;
+    border: 1px solid #C3D9FF;
+    margin: 28px 0px 28px 0px;
+    background-color: #F5F9FD;
+}
+
+.criteria:before {
+    content: "Acceptance criteria";
+}
+
+.criteria:first-line {
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-size: 16pt;
+    font-weight: normal;
+    color: #606060;
+}
+
+.scenario {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 14pt;
+    font-weight: normal;
+    color: #00AE90;
+}
+
+.description {
+    font-size: 10pt;
+    margin-left: 12pt;
+}
+
+.special {
+    font-style: italic;
+}
+
+.idea {
+    font-size: 9pt;
+    color: #888;
+    font-style: italic;
+}
+
+.tight li {
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
+
+.commentary {
+    float: right;
+    width: 200px;
+    background-color: #ffffd0;
+    padding: 8px;
+    border: 3px solid #eeeeb0;
+    margin: 10px 0px 10px 10px;
+}
+
+.commentary,.commentary * {
+    font-size: 8pt;
+}
+
+.concordion-set {
+    color: #877000;
+}
+
+.concordion-execute {
+    color: #800000;
+}
+
+.concordion-assert {
+    color: #000060;
+}
+
+span.concordion-set:hover,span.concordion-execute:hover,span.concordion-assert:hover
+    {
+    border-bottom: 1px solid lightgray;
+}
+
+.given,.when,.then {
+    font-size: 10pt;
+    margin-top: 0.2em;
+}
+
+.given,.when {
+    text-indent: -2.8em;
+    padding-left: 2.8em;
+}
+
+.then {
+    text-indent: -2.5em;
+    padding-left: 2.5em;
+}
+
+.breadcrumbs { .
+    font-size: 10pt;
+}
+
+.breadcrumbs a {
+    text-decoration: none;
+    color: #606060;
+}
+
+.breadcrumbs a:hover {
+    color: red;
+}
+
+.test-group {
+    margin-left: 20px;
+    color: #404040;
+}
+
+.test {
+    margin-bottom: 8px;
+}
+
+.test a {
+    text-decoration: none;
+    color: #404040;
+    font-size: 10pt;
+    padding: 2px 4px;
+}
+
+.test a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+span.passed {
+    background-color: #ddffdd;
+}
+
+span.failed {
+    background-color: #ffd0d0;
+}
+
+span.skipped {
+    background-color: #d6aeea;
+}
+
+span.manual {
+    background-color: #fbefc1;
+}
+
+span.unknown {
+    background-color: #f5f9fd;
+}
+
+span.rerun {
+    font-style: italic;
+}
+
+.screenshot {
+    font-size: 10pt;
+}
+
+.screenshot a {
+    text-decoration: none;
+    color: #606060;
+}
+
+.screenshot a:hover {
+    color: red;
+}
+
+.screenshot-link {
+    padding-left: 15px;
+}
+
+.features {
+    float: right;
+    font-size: 14px;
+    margin-top: 50px;
+    padding-left: 300px;
+    padding-right: 200px;
+}
+
+.features .features-header {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.features span {
+    display: inline;
+    padding: 3px;
+}
+
+.features .features-lob {
+    font-weight: bold;
+    padding: 4px 8px;
+}
+
+.features .features-feature {
+    font-style: italic;
+}
+
+.features .features-table {
+    display: table;
+}
+
+.features .features-row {
+    display: table-row;
+}
+
+.features .features-cell {
+    display: table-cell;
+    border: 1px solid;
+    text-align: center;
+}
+
+.legend {
+    float: right;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.legend .legend-header {
+    font-weight: bold;
+    text-align: center;
+}
+
+.legend span {
+    display: inline;
+    padding: 2px;
+    border: 4px;
+}
+
+.legend span a {
+    font-size: 12px;
+}
+
+.features-table td {
+	background-color: none;
+}
+
+.all-importance .high-importance, .high-importance-only .high-importance {
+	background-color: rgb(192,80,77);
+	color: white;
+}
+
+.all-importance .medium-importance, .medium-importance-only .medium-importance {
+	background-color: rgb(247,150,70);
+	color: white;
+}
+
+.all-importance .low-importance, .low-importance-only .low-importance {
+	background-color: rgb(155,187,89);
+	color: white;
+}
+
+.all-importance .no-importance, .no-importance-only .no-importance {
+	background-color: rgb(238,236,225);
+	opacity: 1.0 !important;
+}
+
+.all-importance .unknown-importance, .unknown-importance-only .unknown-importance {
+	background-color: rgb(197,217,241);
+    opacity: 1.0 !important;
+}
+
+.lob-common, .lob-quickassist, .lob-niche, .lob-financials, .lob-pvt, .lob-batch {
+    display: none !important;
+}
