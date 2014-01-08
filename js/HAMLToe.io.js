@@ -10,34 +10,34 @@
             new HAMLToe.Importer();
             new HAMLToe.Exporter();
 
-            document.getElementById("hamltoe-new").onclick = function() {
-                document.getElementById("hamltoe-input").innerText = "";
-                document.getElementById('hamltoe-file').innerText = "";
+            $( "#hamltoe-new" ).click(function() {
+                $( "#hamltoe-input" ).text( "" );
+                $( "#hamltoe-file" ).text( "" );
                 editor.refreshPreview();
-            }
+            });
         };
     };
 
     HAMLToe.Exporter = function() {
 
-        var exporter = document.getElementById("hamltoe-export");
+        var exporter = $( "#hamltoe-export" );
         exporter.onclick = function() {
             this.herf = "";
             // TODO test for a file name to use, let the user know if there's not one set and return
             this.href = "data:application/octet-stream,".concat(encodeHaml());
-            var name = document.getElementById('hamltoe-file').innerText;
+            var name = $( "#hamltoe-file").text();
             this.download = name == "" ? "new.haml" : name;
         };
 
     };
 
     function encodeHaml() {
-        return encodeURI(document.getElementById("hamltoe-input").value);
+        return encodeURI($( "#hamltoe-input").text());
 
     };
 
     HAMLToe.Importer = function() {
-        var dropZone = document.getElementById('hamltoe-dropzone');
+        var dropZone = document.getElementById("hamltoe-dropzone");
         dropZone.addEventListener('dragover', handleDragOver, false);
         dropZone.addEventListener('drop', handleFileSelect, false);
     };
@@ -54,8 +54,8 @@
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
             return function(e) {
-                document.getElementById('hamltoe-input').innerText = e.target.result;
-                document.getElementById('hamltoe-file').innerText = theFile.name;
+                $( "#hamltoe-input").text( e.target.result );
+                $( "#hamltoe-file").text( theFile.name );
                 editor.refreshPreview();
             };
         })(file);
@@ -67,6 +67,7 @@
     function handleDragOver(evt) {
         evt.stopPropagation();
         evt.preventDefault();
+        // TODO maybe figure out how to turn this back on
         evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
     }
 

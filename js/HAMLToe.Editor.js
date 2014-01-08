@@ -79,6 +79,20 @@
         var that = this,
                 panels;
 
+        this.setContent = function() {
+            panels.input.innerText = "%h1 What is this?\n" +
+                    "%p\n" +
+                    "  This is an online environment for testers to view, edit and experiment with HAML for specification writing.\n" +
+                    "%p\n" +
+                    "  It allows drag-and-drop file selection to choose which files to edit, as well as the ability to save the modified HAML back to disc.\n" +
+                    "%h2 No really, what is it?\n" +
+                    "%p\n" +
+                    "  HAMLtoe (HAML Tester's Online Environment) is based on two open source libraries and utilises the HTML5 FileReader API, available in all modern browsers.\n" +
+                    "%p\n" +
+                    "  It leverages Stackoverflow's MarkDown editor widget for on-the-fly input conversion ";
+        }
+
+
         this.run = function () {
             if (panels)
                 return; // already initialized
@@ -106,6 +120,8 @@
 //
 //            uiManager = new UIManager(panels, undoManager, previewManager, commandManager, options.helpButton, getString);
 //            uiManager.setUndoRedoButtonStates();
+
+            that.setContent();
 
             var forceRefresh = that.refreshPreview = function () { previewManager.refresh(true); };
 
